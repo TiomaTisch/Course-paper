@@ -1,3 +1,6 @@
+import java.util.Arrays;
+import java.util.Objects;
+
 public class EmployeeBook {
     private Employee[] employees;
     private int maxEmployees;
@@ -7,6 +10,7 @@ public class EmployeeBook {
         this.employees = new Employee[maxEmployees];
     }
 
+    // Добавление сотрудника
     public boolean addEmployee(Employee newEmployee) {
         for (int i = 0; i < maxEmployees; i++) {
             if (employees[i] == null) {
@@ -17,6 +21,7 @@ public class EmployeeBook {
         return false;
     }
 
+    // Удаление сотрудника
     public boolean removeEmployee(int id) {
         for (int i = 0; i < maxEmployees; i++) {
             if (employees[i] != null && employees[i].getId() == id) {
@@ -27,6 +32,7 @@ public class EmployeeBook {
         return false;
     }
 
+    // Получение сотрудника по ID
     public Employee getEmployeeById(int id) {
         for (Employee employee : employees) {
             if (employee != null && employee.getId() == id) {
@@ -34,10 +40,6 @@ public class EmployeeBook {
             }
         }
         return null;
-    }
-
-    public Employee[] getEmployees() {
-        return employees;
     }
 
     //  Получить список всех сотрудников со всеми имеющимися по ним данными
@@ -203,6 +205,19 @@ public class EmployeeBook {
                 System.out.println("ID: " + employee.getId() + ", ФИО: " + employee.getFullName() + ", Зарплата: " + employee.getSalary());
             }
         }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        EmployeeBook that = (EmployeeBook) o;
+        return maxEmployees == that.maxEmployees && Objects.deepEquals(employees, that.employees);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(Arrays.hashCode(employees), maxEmployees);
     }
 }
 
